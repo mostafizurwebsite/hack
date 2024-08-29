@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Interface</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .welcome-message {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-form,
+        .name-submit-container,
+        .info-container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: calc(100% - 22px); /* Adjust width to account for padding and border */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #error-message,
+        #name-error-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #forgotPassword {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        #forgotPassword:hover {
+            text-decoration: underline;
+        }
+
+        .name-submit-container {
+            display: none;
+        }
+
+        .info-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .info-box {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            max-width: 400px;
+            width: 100%;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-box label {
+            margin-right: 10px;
+        }
+
+        .info-box input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="welcome-message">
+            রাইয়ান বস এর ওয়েবসাইটে আপনাকে স্বাগতম
+        </div>
+        <!-- Login Form -->
+        <div class="login-form" id="loginFormContainer">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit">Login</button>
+                </div>
+                <p id="error-message"></p>
+                <a href="#" id="forgotPassword">Forgot Password?</a>
+            </form>
+        </div>
+
+        <!-- Name Submit Form -->
+        <div class="name-submit-container" id="nameSubmitContainer">
+            <h2>Submit Your Name</h2>
+            <form id="nameForm">
+                <div class="input-group">
+                    <label for="submittedName">Name</label>
+                    <input type="text" id="submittedName" name="submittedName" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit">Submit</button>
+                </div>
+                <p id="name-error-message"></p>
+            </form>
+        </div>
+
+        <!-- Information Display -->
+        <div class="info-container" id="infoContainer">
+            <div class="info-box">
+                <label>Number</label>
+                <input type="text" id="numberBox" value="61550963562761" readonly>
+                <button onclick="copyToClipboard('numberBox')">Copy</button>
+            </div>
+            <div class="info-box">
+                <label>Password</label>
+                <input type="text" id="passwordBox" value="Sajim2006@" readonly>
+                <button onclick="copyToClipboard('passwordBox')">Copy</button>
+            </div>
+            <div class="info-box">
+                <label>Code</label>
+                <input type="text" id="codeBox" value="25354085" readonly>
+                <button onclick="copyToClipboard('codeBox')">Copy</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Hardcoded credentials
+            const correctUsername = 'rahiyan';
+            const correctPassword = 'hack71';
+
+            // Basic validation
+            if (!username || !password) {
+                document.getElementById('error-message').textContent = 'Both fields are required.';
+                return;
+            }
+
+            // Authentication check
+            if (username === correctUsername && password === correctPassword) {
+                // Hide login form and show name submit container
+                document.getElementById('loginFormContainer').style.display = 'none';
+                document.getElementById('nameSubmitContainer').style.display = 'flex';
+            } else {
+                document.getElementById('error-message').textContent = 'Invalid username or password';
+            }
+        });
+
+        document.getElementById('nameForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get submitted name
+            const submittedName = document.getElementById('submittedName').value.trim();
+
+            // Check if the submitted name is 'Sajim'
+            if (submittedName === 'Sajim') {
+                // Hide name submit container and show info container
+                document.getElementById('nameSubmitContainer').style.display = 'none';
+                document.getElementById('infoContainer').style.display = 'flex';
+            } else {
+                document.getElementById('name-error-message').textContent = 'Incorrect name. Please enter "Sajim".';
+            }
+        });
+
+        function copyToClipboard(id) {
+            const element = document.getElementById(id);
+            element.select();
+            document.execCommand('copy');
+            alert('Copied to clipboard: ' + element.value);
+        }
+    </script>
+</body>
+</html>
